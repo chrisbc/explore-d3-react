@@ -1,12 +1,11 @@
 import * as d3 from 'd3';
 import React, { useRef, useEffect } from 'react';
 
-import { d0, d1, onlyX } from './PreviewMFD_data';
+import { d0, onlyRate } from './PreviewMFD_data';
 
 const PreviewMFD = () => {
   const ref = useRef();
-  const data = onlyX(d0); //[10, 40, 30, 20, 50, 10];
-  // const data = d0; //[10, 40, 30, 20, 50, 10];
+  const data = onlyRate(d0); //[10, 40, 30, 20, 50, 10];
   const maxData = d3.max(data) || 0;
   const width = 800;
   const height = 600;
@@ -14,7 +13,7 @@ const PreviewMFD = () => {
   console.log('DATA', data);
 
   useEffect(() => {
-    const svg = d3.select(ref.current).attr('width', width).attr('height', height).style('border', '1px solid black');
+    d3.select(ref.current).attr('width', width).attr('height', height).style('border', '1px solid black');
   }, []);
 
   const draw = () => {
@@ -23,7 +22,7 @@ const PreviewMFD = () => {
     const yScale = d3
       .scaleLog()
       .domain([10e-9, maxData])
-      .range([0, height - 100]);
+      .range([0, height - 100])
 
     selection.transition().duration(300);
     selection.attr('height', (d) => yScale(d));

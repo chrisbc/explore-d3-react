@@ -137,25 +137,27 @@ export const d1 = [
   [8.95, 0.0],
 ];
 
-export const onlyY = (data: number[][]) => {
-  return data.filter((x) => x[0] > 5).map((x) => x[0]);
-};
+// export const onlyMag = (data: number[][]) => {
+//   return data.filter((x) => x[0] > 5).map((x) => x[0]);
+// };
 
-export const onlyX = (data: number[][]) => {
+export const onlyRate = (data: number[][]) => {
   return data.filter((x) => x[0] > 5).map((x) => x[1]);
 };
 
-export const columnarXY = (data: number[][]) => {
-  return [onlyY(data), onlyX(data)];
-};
+// export const columnarXY = (data: number[][]) => {
+//   return [onlyY(data), onlyX(data)];
+// };
 
-export const XandY = (data: number[][]) => {
+export const magAndRate = (data: number[][]) => {
   return data.filter((x) => x[0] > 5);
 };
 
 export const magRateData = (data: number[][]) => {
-  return XandY(data).map((mr) => {
+  return magAndRate(data).map((mr) => {
     const min = 1e-15; //log scales cannot include 0
     return { mag: mr[0], rate: Math.max(mr[1], min) };
+    // const rate = (mr[1] === 0.0) ? NaN : mr[1];
+    // return { mag: mr[0], rate: rate};
   });
 };

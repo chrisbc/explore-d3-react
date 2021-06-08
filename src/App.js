@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import PreviewMFD from './components/PreviewMFD';
 import PreviewLineMFD from './components/PreviewLineMFD';
@@ -12,8 +11,8 @@ function App() {
               <Route path="/PreviewMFD">
                 <PreviewMFD />
               </Route>
-              <Route path="/PreviewLineMFD">
-                 <PreviewLineMFD />
+              <Route path="/PreviewLineMFD" >
+                <PreviewLineMFD />
               </Route>
             </Switch>
         </BrowserRouter>

@@ -2,15 +2,12 @@ import * as d3 from 'd3';
 import React, { useRef, useEffect } from 'react';
 // import { Typography } from '@material-ui/core';
 
-import { d0, d1, onlyY, XandY, columnarXY, magRateData } from './PreviewMFD_data';
+import { d0, d1, magRateData } from './PreviewMFD_data';
 
 const PreviewMFD = () => {
   const ref = useRef(null);
-  const data0 = magRateData(d0); 
-  const data1 = magRateData(d1); 
-
-  let maxData = d3.max(data0.map((x) => x.rate)) || 0;
-  maxData = Math.max( d3.max(data1.map((x) => x.rate)), maxData);
+  const data0 = magRateData(d0);
+  const data1 = magRateData(d1);
 
   // const width = 800;
   // const height = 600;
@@ -19,13 +16,13 @@ const PreviewMFD = () => {
     height = 600 - margin.top - margin.bottom;  
 
   useEffect(() => {
-    const svg = d3.select(ref.current)
+    d3.select(ref.current)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
-  }, []);
+  }, [height, margin.bottom, margin.left, margin.right, margin.top , width]);
 
   useEffect(() => {
     draw();
@@ -45,10 +42,10 @@ const PreviewMFD = () => {
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    //console.log("extent", d3.extent(data0, d => d.rate));
     const y = d3.scaleLog()
       .domain([1e-9, 0.2])
       .range([height, 0]);
+
     svg.append('g')
       .attr('transform', 'translate(' + margin.left + ')')
       .call(d3.axisLeft(y));
@@ -73,7 +70,8 @@ const PreviewMFD = () => {
       .attr('d', d3.line()
           .x((d) => x(d.mag))
           .y((d) => y(d.rate))
-      );
+    );
+
     // Handmade legend
     svg.append('circle').attr('cx', width-100).attr('cy', 30).attr('r', 6).style('fill', 'orange');
     svg.append('text').attr('x', width-80).attr('y', 36).text('sub-seismogenic').style('font-size', '15px');
